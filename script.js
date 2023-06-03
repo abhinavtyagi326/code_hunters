@@ -1,25 +1,30 @@
-let navbar = document.querySelector('.header .navbar');
+const display = document.querySelector("#display");
+const buttons = document.querySelectorAll("button");
 
-document.querySelector('#menu-btn').onclick = () =>{
-    navbar.classList.toggle('active');
-}
-
-window.onscroll = () =>{
-    navbar.classList.remove('active');
-}
-
-let mainVid = document.querySelector('.main-video');
-
-document.querySelectorAll('.course-3 .box .video video').forEach(vid =>{
-
-    vid.onclick = () =>{
-        let src = vid.getAttribute('src');
-        mainVid.classList.add('active');
-        mainVid.querySelector('video').src = src;
+buttons.forEach((item) => {
+  item.onclick = () => {
+    if (item.id == "clear") {
+      display.innerText = "";
+    } else if (item.id == "backspace") {
+      let string = display.innerText.toString();
+      display.innerText = string.substr(0, string.length - 1);
+    } else if (display.innerText != "" && item.id == "equal") {
+      display.innerText = eval(display.innerText);
+    } else if (display.innerText == "" && item.id == "equal") {
+      display.innerText = "Empty!";
+      setTimeout(() => (display.innerText = ""), 2000);
+    } else {
+      display.innerText += item.id;
     }
-
+  };
 });
 
-document.querySelector('#close-vid').onclick = () =>{
-    mainVid.classList.remove('active');
-}
+const themeToggleBtn = document.querySelector(".theme-toggler");
+const calculator = document.querySelector(".calculator");
+const toggleIcon = document.querySelector(".toggler-icon");
+let isDark = true;
+themeToggleBtn.onclick = () => {
+  calculator.classList.toggle("dark");
+  themeToggleBtn.classList.toggle("active");
+  isDark = !isDark;
+};
